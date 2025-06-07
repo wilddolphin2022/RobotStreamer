@@ -78,7 +78,7 @@ Latency (capture → display) is measured automatically and shown on the video.
 
 ## Persisting recordings
 
-`recorder` writes files **inside** its container. To store them on the host simply add a volume in `compose.yml`, e.g.
+`recorder` writes files **inside** its container. To store them on the host simply add (already added) a volume in `compose.yml`, e.g.
 
 ```yaml
 recorder:
@@ -89,7 +89,7 @@ recorder:
     - robot
 ```
 
-With that tweak the recorded *recording.mp4* and *commands.jsonl* will appear in `./output` on your host.
+With that tweak the recorded *recording.mp4* and *commands.jsonl* will (now does) appear in `./output` on your host.
 
 ---
 
