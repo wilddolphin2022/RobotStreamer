@@ -78,7 +78,7 @@ Latency (capture → display) is measured automatically and shown on the video.
 
 ## Persisting recordings
 
-`recorder` writes files **inside** its container. To store them on the host simply add a volume in `RobotStreamer.yml`, e.g.
+`recorder` writes files **inside** its container. To store them on the host simply add a volume in `compose.yml`, e.g.
 
 ```yaml
 recorder:
@@ -104,12 +104,12 @@ With that tweak the recorded *recording.mp4* and *commands.jsonl* will appear in
 ## No webcam? Simulating video on any platform
 
 `/dev/video0` is a Linux‐specific device file created by the V4L2 (Video-for-Linux) driver.  
-On macOS, Windows, CI services, or even Linux machines without a camera the device does **not** exist, so the Docker mapping inside `RobotStreamer.yml` fails.
+On macOS, Windows, CI services, or even Linux machines without a camera the device does **not** exist, so the Docker mapping inside `compose.yml` fails.
 
 You have three easy work-arounds:
 
 1. **Run the Robot Node directly on the host** (macOS / Windows)
-   * Comment-out the `robot:` service (or its `devices:` line) in *RobotStreamer.yml*.
+   * Comment-out the `robot:` service (or its `devices:` line) in *compose.yml*.
    * `cd robot_node && python robot_node.py` – the process can access the host camera directly; the other services still connect to it via `ws://host.docker.internal:8765`.
 
 2. **Use a fallback video inside the container** (all platforms)
@@ -134,7 +134,7 @@ You have three easy work-arounds:
      ffmpeg -re -stream_loop -1 -i sample.mp4 -vf format=yuv420p -f v4l2 /dev/video10
      ```
 
-   * Change the device mapping in *RobotStreamer.yml* to `/dev/video10:/dev/video10`.
+   * Change the device mapping in *compose.yml* to `/dev/video10:/dev/video10`.
 
 Pick whichever option suits your setup – the rest of the stack (Operator + Recorder) stays unchanged.
 
