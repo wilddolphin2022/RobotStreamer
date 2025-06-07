@@ -1,0 +1,20 @@
+services:
+  robot:
+    build: ./robot_node
+    ports:
+      - "8765:8765"
+#  Uncomment the following lines on a Linux host **with** a physical webcam at /dev/video0
+#  devices:
+#    - "/dev/video0:/dev/video0"
+  operator:
+    build: ./operator_node
+    ports:
+      - "8080:8080"
+    depends_on:
+      - robot
+  recorder:
+    build: ./recorder_node
+    volumes:
+      - ./output:/recorder_node/output  # recording.mp4 and commands.jsonl will appear here
+    depends_on:
+      - robot
